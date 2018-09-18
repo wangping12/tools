@@ -1,5 +1,9 @@
 import moment from 'moment'
 
+function dateToString(v) {
+    return moment(v).format('YYYY-MM-DD HH:mm:ss')
+}
+
 function stringToMoment(v) {
     if (!v)
         return v
