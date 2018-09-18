@@ -174,6 +174,11 @@ function moneySmalltoBig(n) {
 export default {
     getPrecision,
     format,
+    toFixedFix,
     round,
-    moneySmalltoBig
+    moneySmalltoBig,
+    transferData,
+    toFixedLocal,
+    clearThousPos,
+    addThousPos
 }
