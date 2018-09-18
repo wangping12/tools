@@ -1,4 +1,71 @@
 import _ from 'lodash'
+
+//  保留千分位
+function addThousPos(input, isFixed) {
+    if (input == null || input == '' || input == undefined || isNaN(parseFloat(input)) || parseFloat(input) == 0) return ''
+
+    if (input.toString().indexOf(',') > -1) {
+        return input
+    }
+    let num,
+        regex = /(\d{1,3})(?=(\d{3})+(?:\.))/g
+
+    if (isFixed == false) {
+        num = parseFloat(input).toFixed(0).toString()
+        regex = /(\d)(?=(?:\d{3})+$)/g
+    } else {
+        num = parseFloat(input).toFixed(2).toString()
+    }
+    return num.replace(regex, "$1,")
+}
+
+// 去除千分位
+function clearThousPos(num, isRetOriginalVal) {
+    let ret
+
+    if (num && num.toString().indexOf(',') > -1) {
+        ret = parseFloat(num.toString().replace(/,/g, ""))
+    } else {
+        if (num == undefined || isNaN(num) || num == null || num.toString().replace(/\s+/g, '') == '') {
+            if (!!isRetOriginalVal) {
+              ret = num
+            } else {
+              ret = 0
+            }
+        } else {
+            ret = parseFloat(num)
+        }
+    }
+
+    return ret
+}
+// 精确度
+function toFixedLocal(value, precision){
+  let ret = value
+  if (value && value.toString().indexOf('.') > -1) {
+    if(value.toString().split('.')[1].length > precision){
+        if (!isNaN(value)) {
+            ret = parseFloat(Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision))
+        } else {
+            ret = 0
+        }
+    }
+  }
+
+  return ret
+}
+
+// 转换数字
+function transferData(amount) {
+    let ret
+    if (amount == null || amount == '' || amount == undefined || isNaN(parseFloat(amount))) {
+        ret = 0
+    } else {
+        ret = parseFloat(clearThousPos(amount))
+    }
+    return ret
+}
+
 /**
  * 获取精度 
  * @param {*值} value 
